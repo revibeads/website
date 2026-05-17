@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revibe — Creative Studio</title>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070a;--bg2:#0d0d12;--bg3:#111118;--card:#13131b;
+  --border:rgba(130,110,255,0.12);--border2:rgba(130,110,255,0.22);
+  --text:#f0eeff;--muted:#7a7a99;
+  --purple:#7b5ea7;--purple-l:#9b7fcb;--purple-ll:#c4aff0;--purple-d:#4a3870;
+  --glow:rgba(123,94,167,0.28);
+  --fd:'Helvetica Neue',Helvetica,Arial,sans-serif;--fb:'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;border-bottom:1px solid var(--border);background:rgba(7,7,10,.9);backdrop-filter:blur(20px)}
+.nav-logo{height:52px;width:auto}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--purple)!important;color:#fff!important;padding:.48rem 1.3rem;border-radius:100px;font-weight:500!important;font-size:.82rem!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--purple-l)!important}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:9rem 5% 6rem;position:relative;overflow:hidden}
+.glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(110px)}
+.g1{width:700px;height:700px;background:rgba(100,70,180,.2);top:-200px;right:-200px;animation:pulse 9s ease-in-out infinite alternate}
+.g2{width:500px;height:500px;background:rgba(80,40,160,.15);bottom:-200px;left:-100px;animation:pulse 11s ease-in-out infinite alternate-reverse}
+.g3{width:280px;height:280px;background:rgba(150,100,220,.1);top:50%;left:35%;animation:pulse 7s ease-in-out infinite alternate}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.15)}}
+
+.badge{display:inline-flex;align-items:center;gap:.6rem;border:1px solid var(--border2);border-radius:100px;padding:.33rem 1rem .33rem .5rem;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--purple-ll);margin-bottom:2rem;width:fit-content}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--purple-l);box-shadow:0 0 8px var(--purple-l);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hero h1{font-family:var(--fd);font-size:clamp(3rem,8vw,7.5rem);font-weight:700;line-height:.95;letter-spacing:-.03em;max-width:960px;margin-bottom:2rem}
+.h-re{color:#f0eeff}.h-vibe{color:var(--purple-l)}.h-dim{color:var(--muted)}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:480px;margin-bottom:3rem;font-weight:300;line-height:1.85}
+.hero-acts{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+
+.btn-p{background:var(--purple);color:#fff;padding:.9rem 2.2rem;border-radius:100px;font-family:var(--fd);font-weight:700;font-size:.95rem;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:background .2s,transform .15s,box-shadow .2s}
+.btn-p:hover{background:var(--purple-l);transform:translateY(-2px);box-shadow:0 16px 40px var(--glow)}
+.btn-g{color:var(--muted);font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border2);padding:.85rem 1.8rem;border-radius:100px;transition:color .2s,border-color .2s}
+.btn-g:hover{color:var(--text);border-color:var(--purple)}
+.arr{transition:transform .2s}
+.btn-g:hover .arr{transform:translateX(4px)}
+
+/* floating card */
+.h-card{position:absolute;right:5%;bottom:5rem;width:255px;border:1px solid var(--border2);border-radius:20px;background:rgba(19,19,27,.88);backdrop-filter:blur(16px);padding:1.4rem;display:flex;flex-direction:column;gap:1rem}
+.h-card-row{display:flex;align-items:center;gap:.75rem}
+.h-icon{width:34px;height:34px;border-radius:10px;background:rgba(123,94,167,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.h-label{color:var(--muted);font-size:.7rem}
+.h-val{color:var(--text);font-weight:500;font-size:.86rem}
+
+/* MARQUEE */
+.mq-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.85rem 0}
+.mq{display:flex;gap:2.5rem;animation:mq 28s linear infinite;width:max-content}
+.mq span{font-family:var(--fd);font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:.8rem}
+.mq .dot{color:var(--purple-l);font-size:.5rem}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
+.st{padding:2.5rem 2rem;text-align:center;border-right:1px solid var(--border)}
+.st:last-child{border-right:none}
+.st-n{font-family:var(--fd);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text);display:block;line-height:1}
+.st-n sup{font-size:1.3rem;color:var(--purple-l);vertical-align:super}
+.st-d{font-size:.72rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:.5rem}
+
+/* SERVICES */
+.services{padding:8rem 5%}
+.sec-tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple-l);margin-bottom:1rem}
+.sec-title{font-family:var(--fd);font-size:clamp(2rem,4.5vw,3.2rem);font-weight:700;letter-spacing:-.025em;line-height:1.05;max-width:620px;margin-bottom:3.5rem}
+
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:24px;overflow:hidden}
+.svc{background:var(--card);padding:2.2rem;position:relative;overflow:hidden;transition:background .3s}
+.svc::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 0%,rgba(123,94,167,.12),transparent 70%);opacity:0;transition:opacity .3s}
+.svc:hover{background:#16161f}
+.svc:hover::before{opacity:1}
+.svc-ico{width:46px;height:46px;border-radius:12px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.5rem;background:rgba(123,94,167,.08)}
+.svc h3{font-family:var(--fd);font-size:1.05rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.02em}
+.svc p{font-size:.85rem;color:var(--muted);line-height:1.8}
+.svc-link{display:inline-block;margin-top:1.2rem;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple-l)}
+
+/* PORTFOLIO */
+.portfolio{padding:8rem 5%;background:var(--bg2)}
+.p-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:240px 240px;gap:10px;margin-top:3.5rem}
+.pi{position:relative;border-radius:16px;overflow:hidden;background:var(--card);cursor:pointer;border:1px solid var(--border);transition:border-color .3s}
+.pi:hover{border-color:var(--purple)}
+.pi:nth-child(1){grid-column:1/6;grid-row:1/3}
+.pi:nth-child(2){grid-column:6/9;grid-row:1/2}
+.pi:nth-child(3){grid-column:9/13;grid-row:1/2}
+.pi:nth-child(4){grid-column:6/10;grid-row:2/3}
+.pi:nth-child(5){grid-column:10/13;grid-row:2/3}
+.pi-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:.18;transition:transform .5s}
+.pi:hover .pi-bg{transform:scale(1.08)}
+.pp1{background:linear-gradient(135deg,#0f0820,#1e0f40)}
+.pp2{background:linear-gradient(135deg,#090d20,#112045)}
+.pp3{background:linear-gradient(135deg,#120820,#2a1040)}
+.pp4{background:linear-gradient(135deg,#0a1218,#0f2535)}
+.pp5{background:linear-gradient(135deg,#150d20,#301850)}
+.pi-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,10,.9) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem;opacity:0;transition:opacity .3s}
+.pi:hover .pi-ov{opacity:1}
+.pi-cat{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--purple-ll);margin-bottom:.3rem;font-weight:600}
+.pi-name{font-family:var(--fd);font-size:1rem;font-weight:700}
+
+/* PROCESS */
+.process{padding:8rem 5%}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-top:4rem}
+.proc-step{padding:2.5rem 2rem;border-right:1px solid var(--border);transition:background .3s}
+.proc-step:last-child{border-right:none}
+.proc-step:hover{background:var(--card)}
+.proc-n{font-family:var(--fd);font-size:2.8rem;font-weight:800;color:rgba(123,94,167,.22);letter-spacing:-.05em;display:block;line-height:1;margin-bottom:1.2rem}
+.proc-step h4{font-family:var(--fd);font-weight:700;font-size:.95rem;margin-bottom:.5rem;letter-spacing:-.01em}
+.proc-step p{font-size:.82rem;color:var(--muted);line-height:1.75}
+
+/* CONTACT */
+.contact{padding:8rem 5%;background:var(--bg2)}
+.ct-inner{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start}
+.ct-left h2{font-family:var(--fd);font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-bottom:1.2rem}
+.ct-left h2 em{font-style:normal;color:var(--purple-l)}
+.ct-left p{color:var(--muted);font-size:.9rem;max-width:360px;line-height:1.85}
+.ct-details{margin-top:2rem;display:flex;flex-direction:column;gap:.8rem}
+.ct-details a{color:var(--text);text-decoration:none;font-size:.88rem;display:flex;align-items:center;gap:.75rem;transition:color .2s}
+.ct-details a:hover{color:var(--purple-ll)}
+.cdot{width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.form{display:flex;flex-direction:column;gap:.9rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.form input,.form textarea,.form select{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:.85rem 1.1rem;color:var(--text);font-family:var(--fb);font-size:.88rem;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none}
+.form input::placeholder,.form textarea::placeholder{color:var(--muted)}
+.form input:focus,.form textarea:focus,.form select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(123,94,167,.15)}
+.form select option{background:#13131b}
+.form textarea{resize:vertical;min-height:120px}
+.form-btn{background:var(--purple);color:#fff;border:none;padding:.9rem 2.2rem;border-radius:100px;font-family:var(--fd);font-weight:700;font-size:.95rem;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s;align-self:flex-start}
+.form-btn:hover{background:var(--purple-l);transform:translateY(-2px);box-shadow:0 12px 32px var(--glow)}
+#fsuccess{display:none;font-size:.85rem;color:var(--purple-ll);margin-top:.3rem}
+
+/* FOOTER */
+footer{padding:2.5rem 5%;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.f-logo{height:42px;width:auto}
+.f-right{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.f-links{display:flex;gap:1.5rem;list-style:none}
+.f-links a{font-size:.78rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.f-links a:hover{color:var(--text)}
+.f-copy{font-size:.76rem;color:var(--muted)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+@media(max-width:1000px){
+  .h-card{display:none}
+  .stats{grid-template-columns:1fr 1fr}
+  .st:nth-child(2){border-right:none}
+  .st:nth-child(3){border-right:1px solid var(--border)}
+  .proc-steps{grid-template-columns:1fr 1fr}
+  .proc-step:nth-child(2){border-right:none}
+  .proc-step:nth-child(3){border-right:1px solid var(--border)}
+  .proc-step:nth-child(1),.proc-step:nth-child(2){border-bottom:1px solid var(--border)}
+  .p-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .pi:nth-child(1),.pi:nth-child(2),.pi:nth-child(3),.pi:nth-child(4),.pi:nth-child(5){grid-column:auto;grid-row:auto;height:200px}
+  .ct-inner{grid-template-columns:1fr;gap:3rem}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .stats{grid-template-columns:1fr}
+  .st{border-right:none!important;border-bottom:1px solid var(--border)}
+  .st:last-child{border-bottom:none}
+  .proc-steps{grid-template-columns:1fr}
+  .proc-step{border-right:none!important;border-bottom:1px solid var(--border)}
+  .proc-step:last-child{border-bottom:none}
+  .p-grid{grid-template-columns:1fr}
+  .pi{height:200px!important}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="logo_set.png" alt="Revibe" class="nav-logo">
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="https://wa.me/555491810" target="_blank" class="nav-cta">Let's talk</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="glow g3"></div>
+
+  <div class="badge"><span class="badge-dot"></span>Creative Studio · Dubai, UAE</div>
+
+  <h1>
+    <span class="h-re">Re</span><span class="h-vibe">vibe</span><br>
+    your brand.<br>
+    <span class="h-dim">Make it</span> unforgettable.
+  </h1>
+
+  <p class="hero-sub">From cinematic video production to scroll-stopping Meta ads — we craft creative content that moves people and grows brands.</p>
+
+  <div class="hero-acts">
+    <a href="#portfolio" class="btn-p">
+      See our work
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#contact" class="btn-g">Start a project <span class="arr">→</span></a>
+  </div>
+
+  <div class="h-card">
+    <div class="h-card-row">
+      <div class="h-icon">🎬</div>
+      <div><div class="h-label">Speciality</div><div class="h-val">Video Production · AI</div></div>
+    </div>
+    <div class="h-card-row">
+      <div class="h-icon">📈</div>
+      <div><div class="h-label">Client satisfaction</div><div class="h-val">100% — always</div></div>
+    </div>
+    <div class="h-card-row">
+      <div class="h-icon">🤝</div>
+      <div><div class="h-label">Brand partners</div><div class="h-val">10+ and growing</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="mq-wrap">
+  <div class="mq">
+    <span>Video Production <span class="dot">✦</span></span>
+    <span>Meta Ads <span class="dot">✦</span></span>
+    <span>Photoshoot <span class="dot">✦</span></span>
+    <span>Poster Design <span class="dot">✦</span></span>
+    <span>Reels Shoot <span class="dot">✦</span></span>
+    <span>Wedding Shoot <span class="dot">✦</span></span>
+    <span>AI Video Production <span class="dot">✦</span></span>
+    <span>Web Development <span class="dot">✦</span></span>
+    <span>Video Production <span class="dot">✦</span></span>
+    <span>Meta Ads <span class="dot">✦</span></span>
+    <span>Photoshoot <span class="dot">✦</span></span>
+    <span>Poster Design <span class="dot">✦</span></span>
+    <span>Reels Shoot <span class="dot">✦</span></span>
+    <span>Wedding Shoot <span class="dot">✦</span></span>
+    <span>AI Video Production <span class="dot">✦</span></span>
+    <span>Web Development <span class="dot">✦</span></span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="st rv">
+    <span class="st-n">100<sup>%</sup></span>
+    <div class="st-d">Client Satisfaction</div>
+  </div>
+  <div class="st rv">
+    <span class="st-n">10<sup>+</sup></span>
+    <div class="st-d">Brand Partners</div>
+  </div>
+  <div class="st rv">
+    <span class="st-n">8</span>
+    <div class="st-d">Services Offered</div>
+  </div>
+  <div class="st rv">
+    <span class="st-n">∞</span>
+    <div class="st-d">Creative Energy</div>
+  </div>
+</div>
+
+<section class="services" id="services">
+  <div class="rv">
+    <div class="sec-tag">What we do</div>
+    <h2 class="sec-title">Every creative service your brand needs.</h2>
+  </div>
+  <div class="svc-grid">
+    <div class="svc rv">
+      <div class="svc-ico">🎬</div>
+      <h3>Video Production</h3>
+      <p>Cinematic brand films, commercials, and corporate videos shot and crafted to perfection in stunning 4K.</p>
+      <span class="svc-link">Explore →</span>
+    </div>
+    <div class="svc rv">
+      <div class="svc-ico">📲</div>
+      <h3>Meta Ads</h3>
+      <p>High-converting Facebook and Instagram ad creatives engineered to stop the scroll and drive measurable results.</p>
+      <span class="svc-link">Explore →</span>
+    </div>
+    <div class="svc rv">
+      <div class="svc-ico">📸</div>
+      <h3>Photoshoot</h3>
+      <p>Professional product, lifestyle, and portrait photography that makes your brand look stunning everywhere it appears.</p>
+      <span class="svc-link">Explore →</span>
+    </div>
+    <div class="svc rv">
+      <div class="svc-ico">🎨</div>
+      <h3>Poster Design</h3>
+      <p>Bold, eye-catching graphic and poster design that communicates your message powerfully at a single glance.</p>
+      <span class="svc-link">Explore →</span>
+    </div>
+    <div class="svc rv">
+      <div class="svc-ico">🎞️</div>
+      <h3>Reels Shoot</h3>
+      <p>Trendy, dynamic short-form content for Instagram and TikTok crafted to grow your audience organically.</p>
+      <span class="svc-link">Explore →</span>
+    </div>
+    <div class="svc rv">
+      <div class="svc-ico">💍</div>
+      <h3>Wedding Shoot</h3>
+      <p>Timeless wedding films and photography that capture every emotion, laugh, and moment of your special day.</p>
+      <span class="svc-link">Explore →</span>
+    </div>
+    <div class="svc rv">
+      <div class="svc-ico">🤖</div>
+      <h3>AI Video Production</h3>
+      <p>Cutting-edge AI-powered video content — faster, smarter, and more visually inventive than ever before.</p>
+      <span class="svc-link">Explore →</span>
+    </div>
+    <div class="svc rv">
+      <div class="svc-ico">💻</div>
+      <h3>Web Development</h3>
+      <p>Clean, fast, and beautiful websites built to convert visitors into customers and showcase your brand perfectly.</p>
+      <span class="svc-link">Explore →</span>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <div class="rv">
+    <div class="sec-tag">Our Work</div>
+    <h2 class="sec-title">Things we're proud to have made.</h2>
+  </div>
+  <div class="p-grid">
+    <div class="pi pp1">
+      <div class="pi-bg">🎬</div>
+      <div class="pi-ov">
+        <div class="pi-cat">Brand Film</div>
+        <div class="pi-name">Cinematic Brand Story — 4K</div>
+      </div>
+    </div>
+    <div class="pi pp2">
+      <div class="pi-bg">📲</div>
+      <div class="pi-ov">
+        <div class="pi-cat">Meta Ads</div>
+        <div class="pi-name">High-ROAS Ad Campaign</div>
+      </div>
+    </div>
+    <div class="pi pp3">
+      <div class="pi-bg">📸</div>
+      <div class="pi-ov">
+        <div class="pi-cat">Photoshoot</div>
+        <div class="pi-name">Product & Lifestyle Shots</div>
+      </div>
+    </div>
+    <div class="pi pp4">
+      <div class="pi-bg">💍</div>
+      <div class="pi-ov">
+        <div class="pi-cat">Wedding Film</div>
+        <div class="pi-name">A Day to Remember</div>
+      </div>
+    </div>
+    <div class="pi pp5">
+      <div class="pi-bg">🤖</div>
+      <div class="pi-ov">
+        <div class="pi-cat">AI Video</div>
+        <div class="pi-name">Next-Gen Visual Campaign</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="rv">
+    <div class="sec-tag">How we work</div>
+    <h2 class="sec-title">Simple process. Outstanding output.</h2>
+  </div>
+  <div class="proc-steps">
+    <div class="proc-step rv">
+      <span class="proc-n">01</span>
+      <h4>Discovery Call</h4>
+      <p>We learn your brand, audience, and goals to shape a creative direction that actually fits.</p>
+    </div>
+    <div class="proc-step rv">
+      <span class="proc-n">02</span>
+      <h4>Concept & Script</h4>
+      <p>Our team develops a compelling creative concept and narrative for your review and approval.</p>
+    </div>
+    <div class="proc-step rv">
+      <span class="proc-n">03</span>
+      <h4>Shoot & Produce</h4>
+      <p>We handle every detail — location, lighting, direction, editing, and colour grading.</p>
+    </div>
+    <div class="proc-step rv">
+      <span class="proc-n">04</span>
+      <h4>Deliver & Launch</h4>
+      <p>Optimised files for every platform, ready to make your brand impossible to ignore.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="ct-inner">
+    <div class="ct-left rv">
+      <div class="sec-tag">Get in touch</div>
+      <h2>Ready to <em>revibe</em> your brand?</h2>
+      <p>Tell us about your project and we'll come back within 24 hours with ideas, energy, and a clear plan.</p>
+      <div class="ct-details">
+        <a href="mailto:revibeads@gmail.com"><span class="cdot"></span>revibeads@gmail.com</a>
+        <a href="tel:+971555491810"><span class="cdot"></span>+971 555 491 810</a>
+        <a href="https://www.instagram.com/revibe.ads/" target="_blank"><span class="cdot"></span>@revibe.ads</a>
+        <a href="#"><span class="cdot"></span>Dubai, UAE</a>
+      </div>
+    </div>
+    <div class="rv">
+      <form class="form" action="https://formsubmit.co/revibeads@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Project Inquiry — Revibe">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Your name" required>
+          <input type="email" name="email" placeholder="Email address" required>
+        </div>
+        <input type="text" name="brand" placeholder="Brand / Company name">
+        <select name="service">
+          <option value="" disabled selected>Select a service</option>
+          <option>Video Production</option>
+          <option>Meta Ads</option>
+          <option>Photoshoot</option>
+          <option>Poster Design</option>
+          <option>Reels Shoot</option>
+          <option>Wedding Shoot</option>
+          <option>AI Video Production</option>
+          <option>Web Development</option>
+          <option>Multiple Services</option>
+        </select>
+        <textarea name="message" placeholder="Describe your vision, goals, and timeline..."></textarea>
+        <button type="submit" class="form-btn">Send it over →</button>
+        <p id="fsuccess" style="display:none">✓ Message sent! We'll be in touch within 24 hours.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <img src="logo_set.png" alt="Revibe" class="f-logo">
+  <div class="f-right">
+    <ul class="f-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://www.instagram.com/revibe.ads/" target="_blank">Instagram</a></li>
+    </ul>
+    <span class="f-copy">© 2024 Revibe. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'),i*90);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:0.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+// Form handled by FormSubmit.co — emails go directly to revibeads@gmail.com
+</script>
+</body>
+</html>
